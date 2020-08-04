@@ -11,7 +11,7 @@ sudo service mysqld start
 sudo service mysqld enable
 }
 database_config(){
-cat <<_EOF >./my.expect
+cat <<_EOF >./my.expect 
 #!/usr/bin/expect -f
 set timeout 3
 spawn mysql -u root -p
@@ -40,13 +40,14 @@ send "exit
 "
 _EOF
 sudo chmod 777 ./my.expect
-sudo grep 'temporary password' /var/log/mysqld.log | sed 's|.*: ||' >./1.txt
+sudo grep 'temporary password' /var/log/mysqld.log | sed 's|.*: ||' >1.txt
 tmp_pass=$(cat 1.txt)
 sudo echo "$tmp_pass"
-sudo ./my.expect $tmp_pass
-rm ./my.expect
+sudo my.expect $tmp_pass
+rm my.expect 1.txt
+local_ip=$(ifconfig eth1 | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
 sudo chmod 666 /etc/my.cnf
-sudo echo "bind-address=192.168.33.11" >>/etc/my.cnf
+sudo echo "bind-address=$local_ip" >>/etc/my.cnf
 sudo chmod 644 /etc/my.cnf
 }
 software_install
