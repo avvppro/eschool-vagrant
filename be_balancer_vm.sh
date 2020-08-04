@@ -2,11 +2,10 @@
 software_install() {
     sudo yum update -y
     rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
-    sudo yum install git wget mc nginx -y    
+    sudo yum install mc nginx setroubleshoot-server -y    
 }
 nginx_config() {
-    sudo setenforce 0
-    sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+ semanage permissive -a httpd_t
     cat <<_EOF >./backend_lb.conf 
     upstream backend {
         server 192.168.33.51:8080;
