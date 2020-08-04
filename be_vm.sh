@@ -20,10 +20,15 @@ _EOF
     sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 }
 backend_config() {
-        git clone  https://github.com/avvppro/eSchool.git
+    local_ip=$(ip addr show eth1 | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
+    git clone  https://github.com/avvppro/eSchool.git
+    sed -i "s/my.db_address/192.168.33.11/g" ./eSchool/src/main/resources/application.properties
+    sed -i "s/my.backend_address/$local_ip/g" ./eSchool/src/main/resources/application.properties
+    sed -i "s/my.db_address/192.168.33.11/g" ./eSchool/src/main/resources/application-production.properties
+    sed -i "s/my.backend_address/$local_ip/g" ./eSchool/src/main/resources/application-production.properties
     cd eSchool/
-    mvn clean package -DskipTests
-    java -jar target/eschool.jar > eschool.log &
+    sudo mvn clean package -DskipTests
+    java -jar target/eschool.jar
 }
 software_install
 server_config

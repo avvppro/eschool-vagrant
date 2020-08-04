@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
             subconfig.vm.box = BOX_IMAGE
             subconfig.vm.network "private_network", ip: "192.168.33.11"
             subconfig.vm.provider "virtualbox" do |vb|
-                vb.memory = "512"
+                vb.memory = "1024"
                 vb.cpus = "1"
             end
             subconfig.vm.provision :shell, path: "db_vm.sh"
@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
             subconfig.vm.box = BOX_IMAGE
             subconfig.vm.network "private_network", ip: "192.168.33.102"
             subconfig.vm.provider "virtualbox" do |vb|
-                vb.memory = "1536"
+                vb.memory = "2048"
                 vb.cpus = "1"
             end
             subconfig.vm.provision :shell, path: "be_vm.sh"
