@@ -27,8 +27,8 @@ backend_config() {
     sed -i "s/my.db_address/192.168.33.11/g" ./eSchool/src/main/resources/application-production.properties
     sed -i "s/my.backend_address/$local_ip/g" ./eSchool/src/main/resources/application-production.properties
     cd eSchool/
-    sudo mvn clean package -DskipTests
-    java -jar target/eschool.jar
+    mvn clean package -DskipTests
+    java -jar target/eschool.jar &
 }
 software_install
 server_config
