@@ -7,7 +7,8 @@ software_install() {
 frontend_config() {
     sudo setenforce 0
     sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-    git clone --single-branch --branch master https://github.com/avvppro/final_project.git
+    git clone https://github.com/avvppro/final_project.git
+    sudo sed -i "s/192.168.33.200/192.168.33.150/g" ./final_project/src/app/services/token-interceptor.service.ts 
     cd final_project/
     sudo npm install -g @angular/cli@7.0.7
     sudo npm install --save-dev  --unsafe-perm node-sass
