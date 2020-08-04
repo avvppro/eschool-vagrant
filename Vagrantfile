@@ -54,5 +54,6 @@ Vagrant.configure("2") do |config|
             end
             subconfig.vm.provision :shell, path: "fe_vm.sh"
         end
+        end
 
 end
