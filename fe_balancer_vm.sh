@@ -8,12 +8,13 @@ nginx_config() {
  semanage permissive -a httpd_t
     cat <<_EOF >./frontend_lb.conf 
     upstream frontend { 
-        server 192.168.33.161:80;
-        server 192.168.33.162:80;
+        ip_hash;
+        server 192.168.33.201:80;
+        server 192.168.33.202:80;
     }
     server {
         listen       80;
-        server_name  192.168.33.200;
+        server_name  192.168.33.250;
         location /{
             proxy_pass http://frontend;
         }
